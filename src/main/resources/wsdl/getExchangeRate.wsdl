@@ -1,0 +1,66 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://www.kpmg.in/iocl/api" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.kpmg.in/iocl/api" targetNamespace="http://www.kpmg.in/iocl/api">
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.kpmg.in/iocl/api">
+            <!--  Exchange Rate Fetch Request  -->
+            <xsd:element name="ExchangeRateRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="from_currency" type="xsd:string"/>
+                        <xsd:element name="to_currency" type="xsd:string"/>
+                        <xsd:element name="exchange_type" type="xsd:string"/>
+                        <xsd:element name="effective_date" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <!--  Exchange Rate Fetch Response  -->
+            <xsd:element name="ExchangeRateResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="isSuccess" type="xsd:boolean"/>
+                        <xsd:element maxOccurs="unbounded" name="exchange" type="tns:allExchange"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="allExchange">
+                <xsd:sequence>
+                    <xsd:element name="effective_date" type="xsd:string"/>
+                    <xsd:element name="exchange_type" type="xsd:string"/>
+                    <xsd:element name="from_currency_ratio" type="xsd:string"/>
+                    <xsd:element name="to_currency_ratio" type="xsd:string"/>
+                    <xsd:element name="from_currency" type="xsd:string"/>
+                    <xsd:element name="to_currency" type="xsd:string"/>
+                    <xsd:element name="exchange_rate" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="ExchangeRateResponse">
+        <wsdl:part element="tns:ExchangeRateResponse" name="ExchangeRateResponse"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="ExchangeRateRequest">
+        <wsdl:part element="tns:ExchangeRateRequest" name="ExchangeRateRequest"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="ExchangeData">
+        <wsdl:operation name="ExchangeRate">
+            <wsdl:input message="tns:ExchangeRateRequest" name="ExchangeRateRequest"> </wsdl:input>
+            <wsdl:output message="tns:ExchangeRateResponse" name="ExchangeRateResponse"> </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ExchangeDataSoap11" type="tns:ExchangeData">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="ExchangeRate">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="ExchangeRateRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="ExchangeRateResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ExchangeDataService">
+        <wsdl:port binding="tns:ExchangeDataSoap11" name="ExchangeDataSoap11">
+            <soap:address location="http://10.146.111.192:8099/iocl/allExchange"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,19 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+This is text : my custom content
+This is from map:
+Param 1 : Param 1 value
+Param 2 Object : Param 2 name
+
+
+Sample content
+my custom content
+
+</body>
+</html>
